@@ -306,17 +306,17 @@ class SiameseStreamer(GenericStreamer):
         #   - the different classes i and j
         # TODO ~three lines of code
         equal_paths = self.dataset.dataset[equal]
-        # i_paths = self.dataset.dataset[i]
-        # j_pahts = self.dataset.dataset[j]
-    
-        # print(len(i_paths))
-        # print(len(j_pahts))
+        i_paths = self.dataset.dataset[i]
+        j_paths = self.dataset.dataset[j]
 
         for idx in same:
             # append to the batch a tuple (img1, img2, 1)
             # use tifffile to read the image
             # cast the image to np.int32
             # TODO ~ 4 till 5 lines of code
+            img1 = tifffile.imread(equal_paths[idx[0]]).astype(np.int32)
+            img2 = tifffile.imread(equal_paths[idx[1]]).astype(np.int32)
+            batch.append((img1, img2, 1))
             self.index += 1
 
         for idx in other:
@@ -324,12 +324,14 @@ class SiameseStreamer(GenericStreamer):
             # use tifffile to read the image
             # cast the image to np.int32
             # TODO ~ 4 till 5 lines of code
+            img1 = tifffile.imread(i_paths[idx[0]]).astype(np.int32)
+            img2 = tifffile.imread(j_paths[idx[1]]).astype(np.int32)
+            batch.append((img1, img2, 0))
             self.index += 1
 
         random.shuffle(batch)
 
-        # return batch
-        return same
+        return batch
 
 
     def stream(self) -> Iterator:
