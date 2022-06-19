@@ -299,11 +299,18 @@ class SiameseStreamer(GenericStreamer):
         """
         batch: List = []
         (same, equal), (other, (i, j)) = self.random_index()
+        
 
         # retrieve the arrays with paths from the three classes:
         #   - the equal class
         #   - the different classes i and j
         # TODO ~three lines of code
+        equal_paths = self.dataset.dataset[equal]
+        # i_paths = self.dataset.dataset[i]
+        # j_pahts = self.dataset.dataset[j]
+    
+        # print(len(i_paths))
+        # print(len(j_pahts))
 
         for idx in same:
             # append to the batch a tuple (img1, img2, 1)
@@ -321,7 +328,9 @@ class SiameseStreamer(GenericStreamer):
 
         random.shuffle(batch)
 
-        return batch
+        # return batch
+        return same
+
 
     def stream(self) -> Iterator:
         while True:
