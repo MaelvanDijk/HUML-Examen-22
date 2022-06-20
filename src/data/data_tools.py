@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 from loguru import logger
 
-# import tifffile
+import tifffile
 from tqdm import tqdm
 
 from src.typehinting import DictDataset, ListDataset
